@@ -3,8 +3,22 @@
 
 	app.config(function($routeProvider) {
 
+		$routeProvider.when('/logout', {
+			templateUrl : "lout"
+		})
+
 		$routeProvider.when('/view_friend', {
 			templateUrl : "view_friends"
+		})
+
+		$routeProvider.when('/friends', {
+			templateUrl : "friends"
+		})
+		$routeProvider.when('/blog', {
+			templateUrl : "blog"
+		})
+		$routeProvider.when('/Add_blog', {
+			templateUrl : "Add_blog"
 		})
 	});
 
@@ -41,6 +55,16 @@
 			});
 		};
 
+		$scope.logout = function() {
+
+			localStorage.clear();
+
+			console.log("in this");
+
+			$location.path("/logout");
+
+		};
+
 		$rootScope.sendFriendrequest = function(x) {
 			$http({
 				url : 'friend_request',
@@ -55,6 +79,34 @@
 				$scope.friend_resuest_result = result.result;
 				$location.path('/view_friend');
 			});
+		}
+
+		$scope.getFriends = function() {
+
+			$http({
+				url : 'get_Friends',
+				method : "POST",
+				data : JSON.stringify({
+					"userId" : $scope.userId
+				}),
+				contentType : 'application/json',
+			}).then(function(response) {
+				var result = response.data;
+				$scope.all_friends = result;
+				$location.path('/friends');
+			});
+
+		}
+		$scope.getBlog = function() {
+
+			$location.path("/blog");
+
+		}
+		
+		$scope.Add_blog=function() {
+						
+			$location.path("/Add_blog");
+
 		}
 
 		$rootScope.sendFriendrequestStatus = function(x, status) {

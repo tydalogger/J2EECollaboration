@@ -1,6 +1,5 @@
 package in.tyda.controller;
 
-import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
@@ -18,13 +17,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 
 import in.tyda.beans.Friend_Request;
 import in.tyda.beans.Friends;
 import in.tyda.beans.User_Profile;
-import oracle.net.aso.r;
 
 @Controller
 public class Friend_Controller {
@@ -88,7 +85,9 @@ public class Friend_Controller {
 		List<Friend_Request> list3 = query3.list();
 		Iterator<Friend_Request> itr3 = list3.iterator();
 
-		if (itr3.hasNext()) {
+		System.out.println(list3);
+
+		if (!itr3.hasNext()) {
 
 			Query query = sc.createQuery("from Friends where userId= :uid AND friendId= :fid");
 			query.setParameter("uid", senderId);
@@ -96,7 +95,7 @@ public class Friend_Controller {
 
 			List<Friend_Request> list = query.list();
 			Iterator<Friend_Request> itr = list.iterator();
-			if (itr.hasNext()) {
+			if (!itr.hasNext()) {
 
 				Query query2 = sc.createQuery("from Friend_Request where senderId= :sid AND targetId= :tid");
 				query2.setParameter("sid", senderId);
@@ -205,6 +204,52 @@ public class Friend_Controller {
 			e.printStackTrace();
 			return responsejson.toString();
 		}
+
+	}
+
+	@RequestMapping(value = "/get_Friends", method = RequestMethod.POST, headers = { "Content-type=application/json" })
+	public @ResponseBody String sendFriends(@RequestBody String name) throws ParseException {
+
+		JSONParser parser = new JSONParser();
+		JSONObject object = (JSONObject) parser.parse(name);
+
+		Random random = new Random();
+
+		String userId = object.get("userId").toString();
+
+		SessionFactory sc1 = new AnnotationConfiguration().configure().buildSessionFactory();
+		Session sc = sc1.openSession();
+		Query query = sc.createQuery("from Friends where userId= :id");
+		query.setParameter("id", userId);
+
+		List<Friends> list = query.list();
+		Iterator<Friends> iterator = list.iterator();
+
+		JSONArray array = new JSONArray();
+
+		while (iterator.hasNext()) {
+			Friends friends = iterator.next();
+
+			JSONObject jsonObject = new JSONObject();
+			jsonObject.put("fid", friends.getfId());
+
+			Query query2 = sc.createQuery("from User_Profile where userId= :id");
+			query2.setParameter("id", friends.getFriendId());
+
+			List<User_Profile> list2 = query2.list();
+			Iterator<User_Profile> iterator2 = list2.iterator();
+
+			if (iterator2.hasNext()) {
+				User_Profile profile = iterator2.next();
+				jsonObject.put("email", profile.getEmail());
+				jsonObject.put("name", profile.getName());
+				jsonObject.put("userId", profile.getUserId());
+			}
+
+			array.add(jsonObject);
+		}
+
+		return array.toString();
 
 	}
 }

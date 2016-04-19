@@ -24,6 +24,11 @@ public class Home_Controller {
 		return "index";
 	}
 	
+	@RequestMapping("/lout")
+	public String lout() {
+		return "index";
+	}
+	
 	@RequestMapping("/desh")
 	public String desh() {
 		return "deshboard";
@@ -44,5 +49,8 @@ public class Home_Controller {
 		return "view_friends";
 	}
 
-	
+	@RequestMapping("/friends")
+	public String view_All_friends(Model model) {
+		return "friends";
+	}
 }

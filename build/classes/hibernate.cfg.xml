@@ -24,13 +24,9 @@
 
 		<!-- List of XML mapping files -->
 		<mapping class="in.tyda.beans.User_Profile" />
-		<mapping class="in.tyda.beans.Forum_Actions" />
-		<mapping class="in.tyda.beans.Forum" />
 		<mapping class="in.tyda.beans.Friend_Request" />
 		<mapping class="in.tyda.beans.Friends" />
-		<mapping class="in.tyda.beans.Blog" />
-		<mapping class="in.tyda.beans.Blog_Actions" />
-		<mapping class="in.tyda.beans.Post" />
-		
+		<mapping class="in.tyda.beans.Blog_Post" />
+
 	</session-factory>
 </hibernate-configuration>

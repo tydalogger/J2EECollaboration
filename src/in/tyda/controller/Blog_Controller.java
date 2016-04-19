@@ -14,7 +14,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
-import in.tyda.beans.Blog;
+import in.tyda.beans.Blog_Post;
 import in.tyda.beans.User_Profile;
 import in.tyda.model.Blog_Add;
 import in.tyda.model.Login;
@@ -22,33 +22,35 @@ import oracle.net.aso.r;
 
 @Controller
 public class Blog_Controller {
-	
+
 	@RequestMapping(value = "/blog_add", method = RequestMethod.POST)
-	public String login(Blog_Add blog,Model model) {
+	public String login(Blog_Add blog, Model model) {
 		String title = blog.getTitle();
 		String content = blog.getContent();
 		String createId = blog.getCreaterId();
-		
+
+		Date date = new Date();
+
 		SessionFactory sc1 = new AnnotationConfiguration().configure().buildSessionFactory();
 		Session sc = sc1.openSession();
-		
-		Random random=new Random();
-		
+
+		Random random = new Random();
+
 		Transaction tx = null;
 		try {
 			tx = sc.beginTransaction();
-			Blog newblog=new Blog();
-			newblog.setCreateId(createId);		
-			newblog.setDate(new Date().toString());
-			newblog.setDescription(content);
-			newblog.setBlogId("blog"+random.nextInt(99999));
+			Blog_Post newblog = new Blog_Post();
+			newblog.setCreateId(createId);
+			newblog.setContent(content);
+			newblog.setDate(date.toString());
+			newblog.setBlogId("blog" + random.nextInt(99999));
 			sc.save(newblog);
 			tx.commit();
 		} catch (Exception e) {
 			model.addAttribute("msg", "Error in Adding Blog");
 			return "blog";
 		}
-		
+
 		model.addAttribute("msg", "Successfully Added Blog");
 		return "blog";
 	}

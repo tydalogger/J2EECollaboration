@@ -19,7 +19,8 @@
 <!-- Custom CSS -->
 <link href="resources/css/simple-sidebar.css" rel="stylesheet">
 <script src="resources/js/angular.js"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-route.js"></script>
+<script
+	src="https://cdnjs.cloudflare.com/ajax/libs/angular.js/1.5.3/angular-route.js"></script>
 <!-- jQuery -->
 <script src="resources/js/jquery-1.11.1.js"></script>
 <script>
@@ -104,7 +105,7 @@
 							<li><a href="#">Profile</a></li>
 							<li><a href="#">Setting</a></li>
 							<li role="separator" class="divider"></li>
-							<li><a href="#">Logout</a></li>
+							<li><a href="lout">Logout</a></li>
 						</ul></li>
 				</ul>
 			</div>
@@ -122,9 +123,9 @@
 				<li><b>Name:</b> {{name}}</li>
 				<li><b>Username:</b> {{userId}}</li>
 				<li><b>Email Id:</b> {{email}}</li>
-				<li><a href="blog">Blog</a></li>
-				<li><a href="#">Events</a></li>
-				<li><a href="#">About</a></li>
+				<li><a href="" ng-click="getBlog()">Blog</a></li>
+				<li><a href="#" >Events</a></li>
+				<li><a href="" ng-click="getFriends()">Friends</a></li>
 				<li><a href="#">Services</a></li>
 				<li><a href="#">Contact</a></li>
 			</ul>

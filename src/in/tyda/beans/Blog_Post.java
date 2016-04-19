@@ -6,36 +6,33 @@ import javax.persistence.Id;
 import javax.persistence.Table;
 
 @Entity
-@Table(name = "Forum")
-public class Forum {
-	
+@Table(name = "Blog_Post")
+public class Blog_Post {
+
 	@Id
-	@Column(name = "forumId")
-	String forumId;
-	
-	@Column(name = "description")
-	String description;
-	
+	@Column(name = "blogId")
+	String blogId;
+	@Column(name = "content")
+	String content;
 	@Column(name = "createId")
 	String createId;
-	
 	@Column(name = "date")
 	String date;
 
-	public String getFourmId() {
-		return forumId;
+	public String getBlogId() {
+		return blogId;
 	}
 
-	public void setFourmId(String fourmId) {
-		this.forumId = fourmId;
+	public void setBlogId(String blogId) {
+		this.blogId = blogId;
 	}
 
-	public String getDescription() {
-		return description;
+	public String getContent() {
+		return content;
 	}
 
-	public void setDescription(String description) {
-		this.description = description;
+	public void setContent(String content) {
+		this.content = content;
 	}
 
 	public String getCreateId() {
@@ -53,5 +50,6 @@ public class Forum {
 	public void setDate(String date) {
 		this.date = date;
 	}
+
 
 }
