@@ -12,12 +12,14 @@ public class Blog_Post {
 	@Id
 	@Column(name = "blogId")
 	String blogId;
+	@Column(name = "title")
+	String title;
 	@Column(name = "content")
 	String content;
 	@Column(name = "createId")
 	String createId;
-	@Column(name = "date")
-	String date;
+	@Column(name = "date_time")
+	String date_time;
 
 	public String getBlogId() {
 		return blogId;
@@ -43,13 +45,22 @@ public class Blog_Post {
 		this.createId = createId;
 	}
 
-	public String getDate() {
-		return date;
+	
+
+	public String getTitle() {
+		return title;
 	}
 
-	public void setDate(String date) {
-		this.date = date;
+	public void setTitle(String title) {
+		this.title = title;
 	}
 
+	public String getDate_time() {
+		return date_time;
+	}
+
+	public void setDate_time(String date_time) {
+		this.date_time = date_time;
+	}
 
 }

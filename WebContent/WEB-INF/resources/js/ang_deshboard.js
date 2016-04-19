@@ -99,12 +99,23 @@
 		}
 		$scope.getBlog = function() {
 
-			$location.path("/blog");
+			$http({
+				url : 'get_user_Blogs',
+				method : "POST",
+				data : JSON.stringify({
+					"createId" : $scope.userId
+				}),
+				contentType : 'application/json',
+			}).then(function(response) {
+				var result = response.data;
+				$scope.all_blog_post = result;
+				$location.path("/blog");
+			});
 
 		}
-		
-		$scope.Add_blog=function() {
-						
+
+		$scope.Add_blog = function() {
+
 			$location.path("/Add_blog");
 
 		}
@@ -126,6 +137,25 @@
 				$location.path('/');
 			});
 		};
+
+		$scope.add_blog_fun = function(title, content) {
+
+			$http({
+				url : 'add_blog_fun',
+				method : "POST",
+				data : JSON.stringify({
+					"createId" : $scope.userId,
+					"title" : title,
+					"content" : content
+				}),
+				contentType : 'application/json',
+			}).then(function(response) {
+				var result = response.data;
+				$scope.add_blog_result = result.result;
+				$location.path('/Add_blog');
+			});
+
+		}
 
 	});
 
