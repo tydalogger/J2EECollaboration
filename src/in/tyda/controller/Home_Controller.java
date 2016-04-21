@@ -53,4 +53,8 @@ public class Home_Controller {
 	public String view_All_friends(Model model) {
 		return "friends";
 	}
+	@RequestMapping("/view_full_blog")
+	public String view_full_blog(Model model) {
+		return "view_full_blog";
+	}
 }

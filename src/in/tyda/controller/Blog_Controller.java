@@ -1,14 +1,18 @@
 package in.tyda.controller;
 
 import java.util.Date;
+import java.util.Iterator;
+import java.util.List;
 import java.util.Random;
 
 import javax.servlet.http.HttpSession;
 
+import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.Transaction;
 import org.hibernate.cfg.AnnotationConfiguration;
+import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
@@ -23,6 +27,8 @@ import in.tyda.beans.Blog_Post;
 import in.tyda.beans.User_Profile;
 import in.tyda.model.Blog_Add;
 import in.tyda.model.Login;
+import oracle.net.aso.l;
+import oracle.net.aso.q;
 import oracle.net.aso.r;
 
 @Controller
@@ -70,18 +76,40 @@ public class Blog_Controller {
 
 	}
 
-	@RequestMapping(value = "/get_user_Blogs", method = RequestMethod.POST, headers = { "Content-type=application/json" })
+	@RequestMapping(value = "/get_user_Blogs", method = RequestMethod.POST, headers = {
+			"Content-type=application/json" })
 	public @ResponseBody String get_user_Blogs(@RequestBody String name) throws ParseException {
 
 		JSONParser parser = new JSONParser();
 
 		JSONObject object = (JSONObject) parser.parse(name);
 
-		JSONObject responseJSON = new JSONObject();
+		JSONArray responseArray = new JSONArray();
+
 		System.out.println(object);
 		String createId = object.get("createId").toString();
-		
-		return name;
+
+		SessionFactory sc1 = new AnnotationConfiguration().configure().buildSessionFactory();
+		Session sc = sc1.openSession();
+
+		Query query = sc.createQuery("from Blog_Post where createId = :cid");
+		query.setParameter("cid", createId);
+		List<Blog_Post> list = query.list();
+		Iterator<Blog_Post> iterator = list.iterator();
+
+		while (iterator.hasNext()) {
+			Blog_Post blog_Post = iterator.next();
+			JSONObject responseJSON = new JSONObject();
+			responseJSON.put("title", blog_Post.getTitle());
+			responseJSON.put("content", blog_Post.getContent());
+			responseJSON.put("date_time", blog_Post.getDate_time());
+			responseJSON.put("blogId", blog_Post.getBlogId());
+			responseJSON.put("createId", blog_Post.getCreateId());
+
+			responseArray.add(responseJSON);
+		}
+
+		return responseArray.toString();
 	}
 
 }

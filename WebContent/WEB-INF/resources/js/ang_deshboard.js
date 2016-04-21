@@ -20,6 +20,9 @@
 		$routeProvider.when('/Add_blog', {
 			templateUrl : "Add_blog"
 		})
+		$routeProvider.when('/view_full_blog', {
+			templateUrl : "view_full_blog"
+		})
 	});
 
 	app.controller("dash_controller", function($scope, $http, $location,
@@ -156,7 +159,16 @@
 			});
 
 		}
+		
+		$scope.view_full_blog=function(x){
+			
+			$scope.blog_title=x.title;
+			$scope.blog_content=x.content;
+			$location.path("/view_full_blog");
+			
+		}
 
 	});
+	
 
 })();
