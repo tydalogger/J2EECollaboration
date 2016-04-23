@@ -124,7 +124,7 @@
 				<li><b>Username:</b> {{userId}}</li>
 				<li><b>Email Id:</b> {{email}}</li>
 				<li><a href="" ng-click="getBlog()">Blog</a></li>
-				<li><a href="#" >Events</a></li>
+				<li><a href="" ng-click="getForum()">forum</a></li>
 				<li><a href="" ng-click="getFriends()">Friends</a></li>
 				<li><a href="#">Services</a></li>
 				<li><a href="#">Contact</a></li>

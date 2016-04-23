@@ -19,7 +19,6 @@
 		<property name="hibernate.connection.password">
 			hr
 		</property>
-		<property name="show_sql">true</property>
 		<property name="hbm2ddl.auto">update</property>
 
 		<!-- List of XML mapping files -->
@@ -27,6 +26,6 @@
 		<mapping class="in.tyda.beans.Friend_Request" />
 		<mapping class="in.tyda.beans.Friends" />
 		<mapping class="in.tyda.beans.Blog_Post" />
-
+		<mapping class="in.tyda.beans.Actions" />
 	</session-factory>
 </hibernate-configuration>

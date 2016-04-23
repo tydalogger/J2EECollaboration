@@ -8,24 +8,27 @@
 
 
 			<div class="row">
+				<br>
+				<br>
 				<table class="table">
-				<tr>
-				<th>BlogId</th>
-					<th>Title</th>
-					<th>Date</th>
-					
-					<th>Action</th>
-				</tr>
-				<tr ng-repeat="x in all_blog_post">
-					<td>{{ x.blogId }}</td>
-					<td>{{ x.title }}</td>
-					<td>{{ x.date_time | date}}</td>
-					<td><button type="button" ng-click="view_full_blog(x);" class="btn btn-primary">Read More..</button></td>
-				</tr>
+					<tr>
+						<th>BlogId</th>
+						<th>Title</th>
+						<th>Date</th>
 
-			</table>
+						<th>Action</th>
+					</tr>
+					<tr ng-repeat="x in all_blog_post">
+						<td>{{ x.blogId }}</td>
+						<td>{{ x.title }}</td>
+						<td>{{ x.date_time | date}}</td>
+						<td><button type="button" ng-click="view_full_blog(x);"
+								class="btn btn-primary">Read More..</button></td>
+					</tr>
 
-				
+				</table>
+
+
 			</div>
 		</div>
 	</div>

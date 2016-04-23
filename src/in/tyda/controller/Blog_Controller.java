@@ -5,8 +5,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 
-import javax.servlet.http.HttpSession;
-
 import org.hibernate.Query;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -17,23 +15,19 @@ import org.json.simple.JSONObject;
 import org.json.simple.parser.JSONParser;
 import org.json.simple.parser.ParseException;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.ResponseBody;
 
+import in.tyda.beans.Actions;
 import in.tyda.beans.Blog_Post;
-import in.tyda.beans.User_Profile;
-import in.tyda.model.Blog_Add;
-import in.tyda.model.Login;
-import oracle.net.aso.l;
-import oracle.net.aso.q;
-import oracle.net.aso.r;
+import oracle.net.aso.a;
 
 @Controller
 public class Blog_Controller {
 
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/add_blog_fun", method = RequestMethod.POST, headers = { "Content-type=application/json" })
 	public @ResponseBody String add_blog_fun(@RequestBody String name) throws ParseException {
 
@@ -76,6 +70,7 @@ public class Blog_Controller {
 
 	}
 
+	@SuppressWarnings("unchecked")
 	@RequestMapping(value = "/get_user_Blogs", method = RequestMethod.POST, headers = {
 			"Content-type=application/json" })
 	public @ResponseBody String get_user_Blogs(@RequestBody String name) throws ParseException {
@@ -106,10 +101,41 @@ public class Blog_Controller {
 			responseJSON.put("blogId", blog_Post.getBlogId());
 			responseJSON.put("createId", blog_Post.getCreateId());
 
+			Query query2 = sc.createQuery("from Actions where postId= :pid");
+			query2.setParameter("pid", blog_Post.getBlogId());
+			List<Actions> list2 = query2.list();
+			Iterator<Actions> iterator2 = list2.iterator();
+
+			JSONArray array = new JSONArray();
+
+			while (iterator2.hasNext()) {
+				Actions actions = iterator2.next();
+				JSONObject object2 = new JSONObject();
+
+				object2.put("actionId", actions.getActionId());
+				object2.put("content", actions.getContent());
+				object2.put("userId", actions.getUserId());
+				object2.put("date", actions.getDate_time());
+
+				System.out.println(object2.toString());
+
+				array.add(object2);
+
+			}
+			responseJSON.put("actions", array);
 			responseArray.add(responseJSON);
 		}
 
 		return responseArray.toString();
+	}
+
+	@SuppressWarnings("unchecked")
+	@RequestMapping(value = "/get_particular_blog", method = RequestMethod.POST, headers = {
+			"Content-type=application/json" })
+	public @ResponseBody String get_particular_blog(@RequestBody String name) throws ParseException {
+		
+		
+		return name;
 	}
 
 }

@@ -15,6 +15,9 @@
 			templateUrl : "friends"
 		})
 		$routeProvider.when('/blog', {
+			
+			
+			
 			templateUrl : "blog"
 		})
 		$routeProvider.when('/Add_blog', {
@@ -159,16 +162,43 @@
 			});
 
 		}
-		
-		$scope.view_full_blog=function(x){
-			
-			$scope.blog_title=x.title;
-			$scope.blog_content=x.content;
+
+		$rootScope.add_action = function(action_content) {
+
+			$http({
+				url : 'add_action_con',
+				method : "POST",
+				data : JSON.stringify({
+					"userId" : $scope.userId,
+					"postId" : $scope.blogId,
+					"content" : action_content
+				}),
+				contentType : 'application/json',
+			}).then(function(response) {
+				var result = response.data;
+				$scope.action_result = result.result;
+				$location.path('/view_full_blog');
+			});
+
+		}
+
+		$scope.view_full_blog = function(x) {
+
+			$scope.blog_title = x.title;
+			$scope.blog_content = x.content;
+			$scope.blogId = x.blogId;
+			$scope.actions = x.actions;
 			$location.path("/view_full_blog");
+
+		}
+		$scope.getForum = function() {
+
+		}
+
+		$scope.getGlobalBlog = function() {
 			
 		}
 
 	});
-	
 
 })();
